@@ -19,13 +19,18 @@ function handleSearch(ev) {
     'https://api.thecatapi.com/v1/images/search?api_key=live_X3Ve6rPvnTm0lGEnp1Zr3quzx6ajb97T9hb2cRkelhmKXlpsUliB8OuEwr1aPFzJ&limit=10';
 
   // fetch data from the Cat API
+  showLoader();
+
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      // console.log(data);
+      hideLoader();
       generateNames(data);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      hideLoader();
+      console.error(err);
+    });
 }
 
 function generateNames(catsArr) {
@@ -46,6 +51,16 @@ function saveToLocalStorage() {
   // store this object in localstorage
   // with key name catnames-pace0033
   localStorage.setItem('catnames-pace0033', JSON.stringify(catnames));
+}
+
+function showLoader() {
+  const overlay = document.querySelector('.overlay');
+  overlay.classList.remove('hidden');
+}
+
+function hideLoader() {
+  const overlay = document.querySelector('.overlay');
+  overlay.classList.add('hidden');
 }
 
 /* DATA SHAPE FOR LOCALSTORAGE 
